@@ -18,9 +18,9 @@ class RegisterView(View):
             
             form = self.form_class(request.POST)
             
-            if User.objects.filter(username = request.POST['username']).exists():
-                 messages.success(request,'Username alredy exist','info')
-                 return render(request,'account/register.html',{'form':form})
+            # if User.objects.filter(username = request.POST['username']).exists():
+            #      messages.success(request,'Username alredy exist','info')
+            #      return render(request,'account/register.html',{'form':form})
 
 
             if form.is_valid():
@@ -28,6 +28,6 @@ class RegisterView(View):
                 User.objects.create_user(cd['username'],cd['email'],cd['password'])
                 messages.success(request,'you registered successfully','success')
                 return redirect('home:home')
-            else:
-                messages.success(request,"لطفا اطلاعات را به درسیتی وارد کنید.",'danger')
-                return render(request,'account/register.html',{'form':form})
+            # else:
+            #     messages.success(request,"لطفا اطلاعات را به درسیتی وارد کنید.",'danger')
+            return render(request,'account/register.html',{'form':form})
