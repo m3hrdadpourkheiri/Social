@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 
+class UserLoginForem(forms.Form):
+    username = forms.CharField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'your username'}),label='نام کاربری')
+    password = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'your username'}),label='کلمه عبور')
+
+
 class UserRegistrationFrom(forms.Form):
     username = forms.CharField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'your username'}),label='نام کاربری')
     email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Example@email.com'}),label='ایمیل')
