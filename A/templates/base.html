@@ -11,8 +11,9 @@
     {% include 'inc/navbar.html' %}
 
     {% if user.is_authenticated %}
-        {{ user.username }}
+    <h3>Username: {{ user.username }}</h3>
     {% endif %}
+    <hr>
     {% block content %}{% endblock %}
 </body>
 </html>

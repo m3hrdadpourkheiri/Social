@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('home.urls',namespace='home')),
     path('account/',include('account.urls',namespace='account')),
+    path('irisa/',include('irisa.urls',namespace='irisa')),
 ]

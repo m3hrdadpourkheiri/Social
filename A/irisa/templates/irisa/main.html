@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">شماره پيشنهاد خريد</th>
+        <th scope="col">تاريخ تاييد پيشنهاد</th>
+        <th scope="col">کد کالا</th>
+        <th scope="col">شرح کالا</th>
+        <th scope="col">مقدار پيشنهاد خريد</th>
+        <th scope="col">تاريخ ايجاد درخواست</th>
+        <th scope="col">مقدار درخواست خريد</th>
+        <th scope="col">کد کارشناس</th>
+        <th scope="col">نام کارشناس</th>
+        <th scope="col">شرح درخواست خريد</th>
+        <th scope="col">مقدار سفارش</th>
+        <th scope="col">قيمت واحد</th>
+        <th scope="col">کد تامين کننده</th>
+        <th scope="col">نام تامین کننده</th>
+        <th scope="col">تاريخ رسيد موقت</th>
+        <th scope="col">مقدار رسيد موقت</th>
+        <th scope="col">تاريخ کنترل کيفي</th>
+        <th scope="col">مقدار کنترل کيفي</th>
+        <th scope="col">تاريخ برگشت</th>
+        <th scope="col">مقدار برگشتي</th>
+        <th scope="col">تاريخ رسيد دايم</th>
+        <th scope="col">مقدار رسيد دايم</th>
+        <th scope="col">مانده سفارش</th>
+        <th scope="col">شارژ انبار شده</th>
+        <th scope="col">مبلغ کل</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for record in dataset.items %}
+            <tr>
+                
+                {% for k,v in record.items %}
+                    <td>{{ v }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+        <!-- {% for d in dataset %}
+            <tr>
+                {% for k,v in d.items %}
+                    <td>{{ v }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %} -->
+      
+    </tbody>
+  </table>
+{% endblock %}

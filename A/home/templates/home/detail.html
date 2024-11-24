@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="d-flex card-header">
+            <div>
+                <a class="btn btn-info" href="{% url 'account:user_profile' post.user.id %}">{{ post.user.username }}</a>
+            </div>
+            <div>
+                <small class="card">Created at: {{ post.created|date:'D_Y/m/j' }}</small><small class="card">Last Update: {{ post.updated|date:'D_Y/m/j' }}</small>
+                
+            </div>    
+        </div>
+        <div class="card-body">
+            <div class="card-title">
+                <h3>{{ post.title }}</h3>
+            </div>
+            <div class="card-text">
+                <h6>{{ post.body }}</h6>
+            </div>
+        </div>
+    </div>
+{% endblock %}
