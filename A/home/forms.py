@@ -5,3 +5,10 @@ class PostUpdateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title','body',)
+
+class PostNewForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('title','body',)
+
+

@@ -6,7 +6,7 @@ from django.views import View
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .forms import PostUpdateForm
+from .forms import PostUpdateForm,PostNewForm
 from django.utils.text import slugify
 # Create your views here.
 
@@ -64,5 +64,25 @@ class PostUpdateView(LoginRequiredMixin,View):
              updated_post.save()
              messages.success(request,'بروز رسانی شد','success')
              return render(request,'home/detail.html',{'post':post})
+         
+
+
+class NewPostView(LoginRequiredMixin,View):
+    form_class = PostNewForm
+
+    def get(self,request):
+        form = self.form_class
+        return render(request,'home/new.html',{'form':form})
+    
+    def post(self,request):
+        form = self.form_class(request.POST)
+        if form.is_valid:
+            new_post = form.save(commit=False)
+            new_post.slug = slugify(form.cleaned_data['title'][:30])
+            new_post.user = request.user
+            new_post.save()
+            messages.success(request,'پست اضافه شد','success')
+            return redirect('home:post_detail',new_post.id,new_post.slug)
+        
          
     
