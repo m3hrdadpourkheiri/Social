@@ -7,7 +7,7 @@
     <hr>
     <div class="card">
         {% for post in posts %}
-            <a href="{% url 'home:post_detail' post.id  post.slug%}" class="card-body">{{ post.title }} <br> ({{ post.created }})</a>
+            <a href="{{ post.get_absolute_url }}" class="card-body">{{ post.title }} <br> ({{ post.created }})</a>
             <hr>
         {% endfor %}
     </div>
