@@ -1,6 +1,6 @@
 from typing import Any
 from django.http.request import HttpRequest as HttpRequest
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.views import View
 from .models import Post
@@ -20,13 +20,15 @@ class HomeView(View):
 class PostView(LoginRequiredMixin,View):
     login_url='/account/login'
     def get(self,request,post_id,post_slug):
-        post = Post.objects.get(pk=post_id)
+        #post = Post.objects.get(pk=post_id)
+        post = get_object_or_404(Post,pk=post_id)
         return render(request,'home/detail.html',{'post':post})
 
 class PostDeleteView(LoginRequiredMixin,View):
     login_url='/account/login'
     def get(self,request,post_id):
-         post = Post.objects.get(id=post_id)
+         #post = Post.objects.get(id=post_id)
+         post = get_object_or_404(Post,pk=post_id)
          if request.user.id == post.user.id:
              post.delete()
              messages.success(request,'پست بطور کامل پاک شد.','info')
@@ -39,7 +41,8 @@ class PostUpdateView(LoginRequiredMixin,View):
      form_class  = PostUpdateForm
 
      def setup(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
-         self.post_instance= Post.objects.get(pk=kwargs['post_id'])
+         #self.post_instance= Post.objects.get(pk=kwargs['post_id'])
+         self.post_instance = get_object_or_404(Post,pk=kwargs['post_id'])
          return super().setup(request, *args, **kwargs)
      
      def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:

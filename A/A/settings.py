@@ -76,11 +76,24 @@ WSGI_APPLICATION = 'A.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "Django_social",
+        "USER": "sa",
+        "PASSWORD": "Q3Portal2",
+        "HOST": "172.30.24.5",
+        "PORT": "1433",
+        "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+        },
+    },
 }
 
 
