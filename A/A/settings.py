@@ -142,3 +142,13 @@ AUTHENTICATION_BACKENDS=[
     'django.contrib.auth.backends.ModelBackend',
     'account.authenticate.EmailBackend',
     ]
+
+#Google Account
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'mail.noortek.co.uk'
+EMAIL_HOST_USER = 'django@noortek.co.uk'
+EMAIL_PORT = 465
+EMAIL_HOST_PASSWORD = "qwerty@123@123@qwerty"
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = "Social_Django_Reset_Password"

@@ -13,11 +13,12 @@ from django.utils.text import slugify
 
 class HomeView(View):
     def get(self,request):
-        posts = Post.objects.all()
+        #posts = Post.objects.all().order_by('-created')
+        posts = Post.objects.order_by('-created')
         return render(request,'home/index.html',{'posts':posts})
     
 
-class PostView(LoginRequiredMixin,View):
+class PostView(View):
     login_url='/account/login'
     def get(self,request,post_id,post_slug):
         #post = Post.objects.get(pk=post_id)
