@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from .models import Profile
 
 
 class UserLoginForem(forms.Form):
@@ -35,3 +36,12 @@ class UserRegistrationFrom(forms.Form):
         confirmpassword = cd.get('confirm_password')
         if password and confirmpassword and password != confirmpassword:
             raise ValidationError('کلمه عبور و تایید کلمه عبور باید یکسان باشند')
+        
+
+class EditUserProfileForm(forms.ModelForm):
+    email = forms.EmailField()
+    class Meta():
+        model = Profile
+        fields = ('age','bio',)
+
+    

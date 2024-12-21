@@ -6,6 +6,7 @@
     <h2 class="text-left">{{ user.email }}</h2>
     {% if request.user.id == user.id %}
         <a href="{% url 'home:post_new' %}" class="btn btn-primary">Create</a>
+        <a href="{% url 'account:edit_profile' %}" class="btn btn-info">Edit Profile</a>
     {% endif %}
     {% if request.user.id != user.id and not is_following %}
         <a href="{% url 'account:user_follow' user.id %}" class="btn btn-primary">Follow</a>

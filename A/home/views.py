@@ -6,7 +6,7 @@ from django.views import View
 from .models import Post,Comment,Vote
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .forms import PostUpdateForm,PostNewForm,CommentCreateForm,CommentReplyForm
+from .forms import PostUpdateForm,PostNewForm,CommentCreateForm,CommentReplyForm,PostSearchForm
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -14,10 +14,14 @@ from django.utils.decorators import method_decorator
 
 
 class HomeView(View):
+    form_class = PostSearchForm
+
     def get(self,request):
         #posts = Post.objects.all().order_by('-created')
         posts = Post.objects.order_by('-created')
-        return render(request,'home/index.html',{'posts':posts})
+        if request.GET.get('search'):
+            posts=posts.filter(body__contains=request.GET['search']) #part 40-search
+        return render(request,'home/index.html',{'posts':posts,'form':self.form_class})
     
 
 class PostView(View):
@@ -36,7 +40,8 @@ class PostView(View):
         can_like = False
         if request.user.is_authenticated and self.post_instance.user_can_like(request.user):
             can_like=True
-        return render(request,'home/detail.html',{'post':self.post_instance,'comments':comments,'form':self.form_class,'reply_form':self.form_class_reply,'can_like':can_like})
+        return render(request,'home/detail.html',{'post':self.post_instance,'comments':comments,'form':self.form_class,
+                                                  'reply_form':self.form_class_reply,'can_like':can_like})
     
     @method_decorator(login_required) #part 36 method decorators
     def post( self,request,*args,**kwargs):
@@ -142,6 +147,7 @@ class PostLikeView(LoginRequiredMixin,View):
             Vote.objects.create(post=post,user=request.user)
             messages.success(request,'you like this post successfully')
         return redirect('home:post_detail', post.id,post.slug)
+    
 
     
         
