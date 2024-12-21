@@ -9,7 +9,8 @@
             <div>
                 <small class="card">Created at: {{ post.created|date:'D_Y/m/j' }}</small><small class="card">Last Update: {{ post.updated|date:'D_Y/m/j' }}</small>
                 
-            </div>    
+            </div>   
+
         </div>
         <div class="card-body">
             <div class="card-title">
@@ -18,11 +19,50 @@
             <div class="card-text">
                 <h6>{{ post.body }}</h6>
             </div>
+                <a href="{% url 'home:post_like' post.id %}" class="btn btn-primary col-md-2 {% if can_like %}disabled{% endif %}">Like {{ post.likes_count }}</a>
+
+                {% if request.user.id == post.user.id %}
+                    <a href="{% url 'home:post_delete' post.id %}" class="btn btn-danger">حذف</a>
+                    <a href="{% url 'home:post_update' post.id %}" class="btn btn-info">اصلاح</a>
+                {% endif %} 
+            <hr>
+                {% if request.user.is_authenticated %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Send" class="btn btn-primary">
+                    </form>
+                {% else %}
+                    <p class="alert alert-danger">only loged in user can write comment.</p>
+                {% endif %}
+            <hr>
+            <p>{{ comments.count }} Comments</p>
+            {% for comment in comments %}
+                <div class="card">
+                    <p class="card-header bg-dark text-white">{{ comment.user }} | {{ comment.created }}</p>
+                    <p class="card-body">{{ comment.body }}</p>
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'home:add_reply' post.id comment.id %}" method="post" style="margin: 10px;">
+                            {% csrf_token %}
+                            {{ reply_form.as_p }}
+                            <input type="submit" value="Send" class="btn btn-primary">
+                        </form>
+                    {% endif %}
+                    {% for reply in comment.rcomment.all %}
+                        <div class="card"  style="margin: 10px;">
+                            <p class="card-header bg-dark text-white">{{ reply.user }} | {{ reply.created }}</p>
+                            <p class="card-body">{{ reply.body }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+            {% empty %}
+                <div>
+                    <p>No comment yet!</p>
+                </div>
+            {% endfor %}
         </div>
         
     </div>
-    {% if request.user.id == post.user.id %}
-    <a href="{% url 'home:post_delete' post.id %}" class="btn btn-danger">حذف</a>
-    <a href="{% url 'home:post_update' post.id %}" class="btn btn-info">اصلاح</a>
-    {% endif %}
+    
 {% endblock %}
